@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chestnut Electric Invoices</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+<div class="form">
+    <section class="form">
+        <label for="description" style="padding-right: 70%">Description:</label>
+        <label for="amount" style="padding-right: 14%">Quantity:</label>
+    </section>
+
+    <textarea class="form" rows="4" id="description" style="width: 75%;"></textarea>
+    <button class="form" type="button" onclick="addRow()" style="height: 3em; float: right; margin-right: 3%;">Add Item</button>
+    <input class="form" type="number" id="amount" value="0" style="float: right; margin-right: 2%;">
+
+    <br>
+    <label class="form" for="name">Name:</label>
+    <input class="form" id="name">
+    <label class="form" for="date">Date:</label>
+    <input class="form" id="date">
+    <label class="form" for="invNum">Invoice Number:</label>
+    <input class="form" id="invNum">
+</div>
+
+<header style="margin: 15px">
+    <h1 style="margin: 0; padding: 5px;">Chestnut Electric Inc</h1>
+    <h2 style="margin: 0; padding: 5px;">Adam Chestnut</h2>
+    <p style="margin: 0; padding: 5px;">Owner</p>
+    <address style="margin: 0; padding: 5px;">
+        261 Walliston Ave <br>
+        Pittsburgh, Pa. 15202 <br>
+        412-335-3658 <br>
+        chestnutelectric@gmail.com
+    </address>
+</header>
+<table id="headOfDocument">
+    <thead>
+    <tr>
+        <th style="width: 25%">Invoice number:</th>
+        <th style="width: 55%">Billed to:</th>
+        <th>Date:</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<table id="invoiceTable">
+    <thead>
+    <tr>
+        <th style="width: 75%">Description</th>
+        <th>Amount</th>
+        <th class="form">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td style="text-align:right;">Total:</td>
+        <td><p id="total">0</p></td>
+    </tr>
+    </tfoot>
+</table>
+
+
+</body>
+</html>

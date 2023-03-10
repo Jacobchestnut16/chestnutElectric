@@ -1,0 +1,43 @@
+html{
+    background: wheat;
+}
+
+body{
+    background: grey;
+    width: 1800px;
+    margin: 0 auto;
+    font-size: 1.45em;
+    font-family: Arial, sans-serif;
+}
+
+table{
+    width: 100%;
+    border: black 1px solid;
+    border-collapse: collapse;
+}
+thead{
+    border: black 1px solid;
+}
+thead tr{
+    border: black 1px solid;
+}thead th{
+     border: black 1px solid;
+ }
+tr{
+    width: 100%;
+    border: black 1px solid;
+}
+tr td{
+    border: black 1px solid;
+}
+
+
+@media print{
+    .form{
+        display: none!important;
+    }
+    body{
+        width: 100%;
+        font-size: 15px;
+    }
+}
