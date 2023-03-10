@@ -3,11 +3,12 @@ html{
 }
 
 body{
-    background: grey;
-    width: 1800px;
+    background: lightgray;
+    width: 1080px;
     margin: 0 auto;
-    font-size: 1.45em;
+    font-size: 1em;
     font-family: Arial, sans-serif;
+    padding: 10px;
 }
 
 table{
