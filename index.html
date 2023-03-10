@@ -5,6 +5,7 @@
     <title>Chestnut Electric Invoices</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -15,7 +16,8 @@
     </section>
 
     <textarea class="form" rows="4" id="description" style="width: 75%;"></textarea>
-    <button class="form" type="button" onclick="addRow()" style="height: 3em; float: right; margin-right: 3%;">Add Item</button>
+    <button id="addBtn" class="form" type="button" onclick="addRow()" style="height: 3em; float: right; margin-right: 3%;">Add Item</button>
+    <button id="updateBtn" class="form" type="button" style="height: 3em; float: right; margin-right: 3%; display: none;">Update</button>
     <input class="form" type="number" id="amount" value="0" style="float: right; margin-right: 2%;">
 
     <br>
@@ -25,13 +27,18 @@
     <input class="form" id="date">
     <label class="form" for="invNum">Invoice Number:</label>
     <input class="form" id="invNum">
+
+    <label class="form" for="fileUpload"></label>
+    <input class="form" type="file" id="fileUpload">
+    <button class="form" id="saveBtn">Save</button>
 </div>
 
 <header style="margin: 15px">
+    <div style="float: left;">
     <h1 style="margin: 0; padding: 5px;">Chestnut Electric Inc</h1>
     <h2 style="margin: 0; padding: 5px;">Adam Chestnut</h2>
-    <p style="margin: 0; padding: 5px;">Owner</p>
-    <address style="margin: 0; padding: 5px;">
+    </div>
+    <address style="margin: 0; padding: 5px; float: right">
         261 Walliston Ave <br>
         Pittsburgh, Pa. 15202 <br>
         412-335-3658 <br>
@@ -66,6 +73,81 @@
     </tr>
     </tfoot>
 </table>
+<script>
+    document.getElementById("saveBtn").addEventListener("click", function() {
+        setheaderstuff();
+        let blob = new Blob([JSON.stringify(invoiceData)], {type: "text/plain"});
+        let url = URL.createObjectURL(blob);
+        let link = document.createElement("a");
+        link.href = url;
+        link.download = name+"-"+date+"-"+invNum+".txt";
+        link.click();
+        URL.revokeObjectURL(url);
+    });
+
+
+    document.getElementById("fileUpload").addEventListener("change", function() {
+        let file = this.files[0];
+
+        let reader = new FileReader();
+        reader.addEventListener("load", function() {
+            let textData = reader.result;
+            let myObject = JSON.parse(textData);
+
+            // Code to use object values goes here
+            //sets the invoice values
+            //{data: "this is row data one", dataAmount: 100}
+            for (let i = 0; i < myObject.length; i ++) {
+
+                let dataAmount = 1 * myObject[i]["dataAmount"];
+                let data = myObject[i]["data"];
+
+                invoiceData.push({data, dataAmount})
+
+                let tableBody = document.querySelector("#invoiceTable tbody");
+                let row = tableBody.insertRow();
+                let descriptionCell = row.insertCell(0);
+                let amountCell = row.insertCell(1);
+                let actionCell = row.insertCell(2);
+
+                descriptionCell.innerHTML = myObject[i]["dataAmount"];
+                amountCell.innerHTML = myObject[i]["data"];
+                actionCell.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
+                actionCell.classList.add('form');
+
+                total += dataAmount;
+                document.getElementById("total").innerHTML = total;
+
+            }
+
+            let headerVals = file.name.split("-");
+            invNum = headerVals[2].substring(0, headerVals[2].length-4);
+            date = headerVals[1];
+            name = headerVals[0];
+
+            let tableBody = document.querySelector("#headOfDocument tbody");
+            let row = tableBody.insertRow();
+            invNumCell = row.insertCell(0);
+            nameCell = row.insertCell(1);
+            dateCell = row.insertCell(2);
+            headIsSet = true;
+
+            invNumCell.innerHTML = invNum;
+            invNumCell.id = "inv"
+            dateCell.innerHTML = date;
+            dateCell.id = "dat"
+            nameCell.innerHTML = name;
+            nameCell.id = "nam"
+
+            document.getElementById("name").value = name;
+            document.getElementById("date").value = date;
+            document.getElementById("invNum").value = invNum;
+
+        });
+        reader.readAsText(file);
+    });
+
+</script>
 
 
 </body>

@@ -37,8 +37,18 @@ tr td{
     .form{
         display: none!important;
     }
+    html{
+        background: white;
+    }
     body{
+        background: white;
         width: 95%;
         font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    body{
+        width: 100%;
     }
 }
