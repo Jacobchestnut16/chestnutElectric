@@ -77,6 +77,7 @@
     document.getElementById("saveBtn").addEventListener("click", function() {
         setheaderstuff();
         let blob = new Blob([JSON.stringify(invoiceData)], {type: "text/plain"});
+        console.log(JSON.stringify(invoiceData))
         let url = URL.createObjectURL(blob);
         let link = document.createElement("a");
         link.href = url;
@@ -93,16 +94,18 @@
         reader.addEventListener("load", function() {
             let textData = reader.result;
             let myObject = JSON.parse(textData);
+            console.log(myObject)
 
             // Code to use object values goes here
             //sets the invoice values
             //{data: "this is row data one", dataAmount: 100}
+
             for (let i = 0; i < myObject.length; i ++) {
 
-                let dataAmount = 1 * myObject[i]["dataAmount"];
-                let data = myObject[i]["data"];
+                let description = myObject[i]["description"];
+                let amount = myObject[i]["amount"];
 
-                invoiceData.push({data, dataAmount})
+                invoiceData.push({description, amount})
 
                 let tableBody = document.querySelector("#invoiceTable tbody");
                 let row = tableBody.insertRow();
@@ -110,12 +113,12 @@
                 let amountCell = row.insertCell(1);
                 let actionCell = row.insertCell(2);
 
-                descriptionCell.innerHTML = myObject[i]["dataAmount"];
-                amountCell.innerHTML = myObject[i]["data"];
-                actionCell.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
+                descriptionCell.innerHTML = myObject[i]["description"];
+                amountCell.innerHTML = myObject[i]["amount"];
+                actionCell.innerHTML = '<button onclick="deleteRow(this)">Delete</button><button onclick="updateRow(this)">Update</button>';
                 actionCell.classList.add('form');
 
-                total += dataAmount;
+                total += amount *1;
                 document.getElementById("total").innerHTML = total;
 
             }
