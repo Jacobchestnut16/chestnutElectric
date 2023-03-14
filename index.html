@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
 </head>
 <body>
 
@@ -30,7 +32,9 @@
 
     <label class="form" for="fileUpload"></label>
     <input class="form" type="file" id="fileUpload">
-    <button class="form" id="saveBtn">Save</button>
+    <button class="form" id="saveBtn">Save For Later</button>
+    <button class="form" id="Download">Print / Download</button>
+
 </div>
 
 <header style="margin: 15px">
@@ -86,6 +90,9 @@
         URL.revokeObjectURL(url);
     });
 
+    document.getElementById("Download").addEventListener("click", function () {
+        window.print();
+    });
 
     document.getElementById("fileUpload").addEventListener("change", function() {
         let file = this.files[0];
